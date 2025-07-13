@@ -13,4 +13,7 @@ public class AuthRequest
 {
     private String username;
     private String password;
+    private String department;
+    //private Long roleId;
+    private Long managerId;
 }

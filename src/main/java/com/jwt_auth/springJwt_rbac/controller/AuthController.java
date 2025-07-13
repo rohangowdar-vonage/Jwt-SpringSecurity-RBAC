@@ -28,7 +28,7 @@ public class AuthController
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> userRegister(@RequestBody Map<String,String> requestBody)
+    public ResponseEntity<String> userRegister(@RequestBody AuthRequest requestBody)
     {
         return authService.userRegister(requestBody);
     }
@@ -55,7 +55,7 @@ public class AuthController
     }
 
     @GetMapping("/allUsers")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers()
     {
         return ResponseEntity.ok(authService.getAllUsers());

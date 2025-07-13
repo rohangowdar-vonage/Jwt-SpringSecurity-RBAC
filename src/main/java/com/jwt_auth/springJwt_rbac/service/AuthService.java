@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.util.*;
@@ -36,12 +37,17 @@ public class AuthService
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    public ResponseEntity<String> userRegister(Map<String, String> requestBody)
+    public ResponseEntity<String> userRegister(@RequestBody AuthRequest requestBody)
     {
-        String username = requestBody.get("username");
-        String password = requestBody.get("password");
-        String department = requestBody.get("department");
-        String managerIdStr = requestBody.get("managerId");
+        String username = requestBody.getUsername();
+        String password = requestBody.getPassword();
+        String department = requestBody.getDepartment();
+        Long managerIdStr = requestBody.getManagerId();
+
+        System.out.println("🔵 Received registration for: " + username);
+        System.out.println("🔵 Department: " + department);
+        System.out.println("🔵 Manager ID received: " + managerIdStr);
+
 
         if (userRepo.existsByUsername(username)) {
             throw new RuntimeException("Username already exists");
@@ -56,14 +62,20 @@ public class AuthService
         user.setDepartment(department);
         user.setRole(roleUser);
 
-        if (managerIdStr != null) {
-            Long managerId = Long.parseLong(managerIdStr);
-            User manager = userRepo.findById(managerId)
-                    .orElseThrow(() -> new RuntimeException("Manager not found with id: " + managerId));
+        if (managerIdStr != null)
+        {
+            try {
+                User manager = userRepo.findById(managerIdStr)
+                        .orElseThrow(() -> new RuntimeException("Manager not found with id: " + managerIdStr));
 
-            user.setManager(manager);
+                System.out.println("✅ Manager found: " + manager.getUsername() + " (ID: " + manager.getId() + ")");
+
+                user.setManager(manager);
+            } catch (NumberFormatException ex)
+            {
+                throw new RuntimeException("Invalid managerId format: must be a number");
+            }
         }
-
         userRepo.save(user);
 
         return ResponseEntity.ok("User registered with ROLE_USER");
