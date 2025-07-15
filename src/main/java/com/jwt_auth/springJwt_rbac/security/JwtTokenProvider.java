@@ -28,11 +28,8 @@ public class JwtTokenProvider
     @Value("${jwt.secret}")
     private String secret;
 
-//    @Value("${jwt.expiration}")
-//    private long expiration;
-
     private SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret); // Base64 is used for more secure and 256 bit token holder
+        byte[] keyBytes = Decoders.BASE64.decode(secret); // Base64 is used for more secure and 256bit token holder
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

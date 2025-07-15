@@ -1,4 +1,4 @@
-package com.jwt_auth.springJwt_rbac.entities;
+package com.jwt_auth.springJwt_rbac.custom_enum;
 
 public enum RoleName
 {

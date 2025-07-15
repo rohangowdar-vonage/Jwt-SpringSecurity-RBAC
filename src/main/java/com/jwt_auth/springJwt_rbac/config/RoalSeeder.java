@@ -1,7 +1,7 @@
 package com.jwt_auth.springJwt_rbac.config;
 
 import com.jwt_auth.springJwt_rbac.entities.Role;
-import com.jwt_auth.springJwt_rbac.entities.RoleName;
+import com.jwt_auth.springJwt_rbac.custom_enum.RoleName;
 import com.jwt_auth.springJwt_rbac.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

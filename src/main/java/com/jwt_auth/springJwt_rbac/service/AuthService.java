@@ -4,7 +4,7 @@ import com.jwt_auth.springJwt_rbac.dto.AuthRequest;
 import com.jwt_auth.springJwt_rbac.dto.AuthResponse;
 import com.jwt_auth.springJwt_rbac.dto.UserInfoResponse;
 import com.jwt_auth.springJwt_rbac.entities.Role;
-import com.jwt_auth.springJwt_rbac.entities.RoleName;
+import com.jwt_auth.springJwt_rbac.custom_enum.RoleName;
 import com.jwt_auth.springJwt_rbac.entities.User;
 import com.jwt_auth.springJwt_rbac.repository.RoleRepository;
 import com.jwt_auth.springJwt_rbac.repository.UserRepository;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,9 +43,9 @@ public class AuthService
         String department = requestBody.getDepartment();
         Long managerIdStr = requestBody.getManagerId();
 
-        System.out.println("🔵 Received registration for: " + username);
-        System.out.println("🔵 Department: " + department);
-        System.out.println("🔵 Manager ID received: " + managerIdStr);
+        System.out.println(" Received registration for: " + username);
+        System.out.println(" Department: " + department);
+        System.out.println(" Manager ID received: " + managerIdStr);
 
 
         if (userRepo.existsByUsername(username)) {
@@ -68,7 +67,7 @@ public class AuthService
                 User manager = userRepo.findById(managerIdStr)
                         .orElseThrow(() -> new RuntimeException("Manager not found with id: " + managerIdStr));
 
-                System.out.println("✅ Manager found: " + manager.getUsername() + " (ID: " + manager.getId() + ")");
+                System.out.println(" Manager found: " + manager.getUsername() + " (ID: " + manager.getId() + ")");
 
                 user.setManager(manager);
             } catch (NumberFormatException ex)
@@ -155,6 +154,4 @@ public class AuthService
     {
         return userRepo.findAll();
     }
-
-
 }

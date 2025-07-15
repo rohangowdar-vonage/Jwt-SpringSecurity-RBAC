@@ -3,7 +3,7 @@ package com.jwt_auth.springJwt_rbac.controller;
 
 import com.jwt_auth.springJwt_rbac.dto.AuthRequest;
 import com.jwt_auth.springJwt_rbac.dto.UserInfoResponse;
-import com.jwt_auth.springJwt_rbac.entities.RoleName;
+import com.jwt_auth.springJwt_rbac.custom_enum.RoleName;
 import com.jwt_auth.springJwt_rbac.entities.User;
 import com.jwt_auth.springJwt_rbac.security.JwtTokenProvider;
 import com.jwt_auth.springJwt_rbac.service.AuthService;

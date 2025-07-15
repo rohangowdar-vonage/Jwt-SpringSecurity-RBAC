@@ -1,5 +1,6 @@
 package com.jwt_auth.springJwt_rbac.entities;
 
+import com.jwt_auth.springJwt_rbac.custom_enum.RoleName;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;

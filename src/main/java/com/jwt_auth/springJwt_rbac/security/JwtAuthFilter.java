@@ -25,6 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService userDetailsService;
 
+    //This message is executed for each HTTP request
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -33,9 +34,10 @@ public class JwtAuthFilter extends OncePerRequestFilter
         String token = getTokenFromRequest(request);
 
         try {
-            if (token != null && jwtTokenProvider.validateToken(token)) {
+            if (token != null && jwtTokenProvider.validateToken(token)) //Validate is done and Data will be extracted
+            {
                 String username = jwtTokenProvider.extractUsername(token);
-                List<String> roles = jwtTokenProvider.extractRoles(token); // Custom claim
+                List<String> roles = jwtTokenProvider.extractRoles(token);
 
                 List<GrantedAuthority> authorities = roles.stream()
                         .map(SimpleGrantedAuthority::new)
@@ -54,6 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter
         filterChain.doFilter(request, response);
     }
 
+    //JWT tokens is sent in a proper formate to check
     private String getTokenFromRequest(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         return (authHeader != null && authHeader.startsWith("Bearer "))
